@@ -6,63 +6,95 @@
 
 <div class="section">
 
-    <h1 style="font-size: 38px; font-weight: 900; margin-bottom: 10px;">
-        🛍 Catalogue Batik KainLokal
-    </h1>
+    <div class="catalogue-top">
+        <h1>Catalogue Batik KainLokal</h1>
+        <p>Temukan koleksi batik premium pilihan terbaik untuk gaya formal maupun kasual.</p>
+    </div>
 
-    <p style="font-size: 17px; color: #444;">
-        Koleksi batik pilihan terbaik untuk kebutuhan formal maupun kasual.
-    </p>
+    <div class="catalogue-bar">
 
-    <div class="product-grid">
+        <form method="GET" action="/catalogue" class="search-box">
 
-        <div class="product-card">
-            <img src="/kartika outer.jpeg" alt="Batik Mega Mendung">
-            <h3>Kartika outer</h3>
-            <p>.</p>
-            <span>Rp300.000</span>
-            <a href="#" class="product-btn">Lihat Produk</a>
+            <input type="hidden" name="sort" value="{{ $sort }}">
+
+            <input
+                type="text"
+                name="search"
+                placeholder="Search..."
+                value="{{ $search }}">
+
+            <button type="submit">Search</button>
+
+        </form>
+
+        <div class="sort">
+            <form method="GET" action="/catalogue">
+                <select name="sort" onchange="this.form.submit()">
+
+                    <option value="">Sort by: Default</option>
+
+                    <option value="newest" {{ $sort=="newest" ? "selected" : "" }}>
+                        Newest
+                    </option>
+
+                    <option value="price_low" {{ $sort=="price_low" ? "selected" : "" }}>
+                        Price Low → High
+                    </option>
+
+                    <option value="price_high" {{ $sort=="price_high" ? "selected" : "" }}>
+                        Price High → Low
+                    </option>
+
+                    <option value="stock" {{ $sort=="stock" ? "selected" : "" }}>
+                        Stock Available
+                    </option>
+
+                </select>
+            </form>
+
         </div>
 
-        <div class="product-card">
-            <img src="/VELO 1.jpeg" alt="Batik Parang Klasik">
-            <h3>Velo</h3>
-            <p>.</p>
-            <span>Rp300.000</span>
-            <a href="#" class="product-btn">Lihat Produk</a>
-        </div>
+    </div>
 
-        <div class="product-card">
-            <img src="/BAIT 1.jpeg" alt="Batik Kawung Modern">
-            <h3>Bait</h3>
-            <p>.</p>
-            <span>Rp300.000</span>
-            <a href="#" class="product-btn">Lihat Produk</a>
-        </div>
+    <div class="shop-grid">
 
-        <div class="product-card">
-            <img src="/BAIT 1.jpeg" alt="Batik Kawung Modern">
-            <h3>Bait</h3>
-            <p>.</p>
-            <span>Rp300.000</span>
-            <a href="#" class="product-btn">Lihat Produk</a>
-        </div>
+        @foreach($products as $item)
 
-        <div class="product-card">
-            <img src="/BAIT 1.jpeg" alt="Batik Kawung Modern">
-            <h3>Bait</h3>
-            <p>.</p>
-            <span>Rp300.000</span>
-            <a href="#" class="product-btn">Lihat Produk</a>
-        </div>
+        @if($products->count() == 0)
+        <p style="text-align:center; margin-top:40px; color:#666;">
+            Produk tidak ditemukan.
+        </p>
+        @endif
 
-        <div class="product-card">
-            <img src="/BAIT 1.jpeg" alt="Batik Kawung Modern">
-            <h3>Bait</h3>
-            <p>.</p>
-            <span>Rp300.000</span>
-            <a href="#" class="product-btn">Lihat Produk</a>
-        </div>
+
+        <a href="/product/{{ $item->id }}" class="shop-card">
+
+            @if($item->stock == 0)
+            <div class="badge sold">Sold Out</div>
+            @endif
+
+            <div class="shop-img">
+                <img src="{{ asset($item->image ?? 'products/default.jpg') }}" alt="{{ $item->name }}">
+            </div>
+
+            <div class="shop-info">
+
+                <h3>{{ $item->name }}</h3>
+
+                <p class="price">
+                    Rp{{ number_format($item->price) }}
+                </p>
+
+                <!-- dummy rating ini -->
+                <div class="stars">
+                    ⭐⭐⭐⭐⭐ <span>(5.0)</span>
+                </div>
+
+            </div>
+
+        </a>
+
+        @endforeach
 
     </div>
 

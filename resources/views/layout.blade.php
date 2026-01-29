@@ -1164,22 +1164,19 @@
 
     <header class="navbar @yield('navbar-style')">
 
-        <!-- LOGO -->
         <div class="brand">
             <img src="/Logo.jpeg" alt="KainLokal Logo">
             <span>KainLokal</span>
         </div>
 
-        <!-- MENU -->
         <nav class="nav-links">
             <a href="/">Home</a>
             <a href="/catalogue">Catalogue</a>
             <a href="/voc">VoC</a>
         </nav>
 
-        <!-- BUTTON -->
         <div class="nav-action">
-            <a href="/catalogue" class="nav-btn">Shop Now</a>
+            
         </div>
 
     </header>
